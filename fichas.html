@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Garage Digital 2026 - Análisis Completo</title>
+    <title>Garage Digital 2026 - Selección Marcelo</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -30,7 +30,7 @@
     <div class="bg-white shadow-md sticky top-0 z-50 no-print border-b border-slate-200">
         <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-3">
-                <div class="bg-indigo-600 text-white p-2.5 rounded-xl shadow-lg hover:rotate-3 transition-transform"><i class="fas fa-car-side text-2xl"></i></div>
+                <div class="bg-indigo-600 text-white p-2.5 rounded-xl shadow-lg"><i class="fas fa-car-side text-2xl"></i></div>
                 <div>
                     <h1 class="text-2xl font-extrabold tracking-tight text-slate-900 leading-none">Garage 2026</h1>
                     <p class="text-xs text-slate-500 font-medium">Análisis de Mercado & Selección</p>
@@ -42,7 +42,7 @@
                     <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
                     <input type="text" id="searchInput" placeholder="Buscar por modelo, ubicación..." class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none focus:bg-white transition-all text-sm font-medium" onkeyup="filterCars()">
                 </div>
-                 <button onclick="filterBy('marcelo')" class="bg-amber-500 hover:bg-amber-600 text-white px-5 py-2.5 rounded-xl font-bold transition flex items-center gap-2 shadow-md hover:shadow-lg text-sm w-full md:w-auto justify-center">
+                 <button onclick="filterBy('marcelo')" id="btn-marcelo" class="bg-amber-500 hover:bg-amber-600 text-white px-5 py-2.5 rounded-xl font-bold transition flex items-center gap-2 shadow-md hover:shadow-lg text-sm w-full md:w-auto justify-center">
                     <i class="fas fa-star"></i> Selección Marcelo
                 </button>
             </div>
@@ -53,7 +53,6 @@
             <button onclick="filterBy('all')" class="bg-slate-100 text-slate-600 px-4 py-1.5 rounded-full text-xs font-bold hover:bg-slate-200 transition whitespace-nowrap border border-slate-200">Todos</button>
             <button onclick="filterBy('4x4')" class="bg-emerald-100 text-emerald-700 px-4 py-1.5 rounded-full text-xs font-bold hover:bg-emerald-200 transition whitespace-nowrap border border-emerald-200">Solo 4x4</button>
             <button onclick="filterBy('top')" class="bg-indigo-100 text-indigo-700 px-4 py-1.5 rounded-full text-xs font-bold hover:bg-indigo-200 transition whitespace-nowrap border border-indigo-200">Top Puntaje (>7.0)</button>
-            <button onclick="filterBy('diesel')" class="bg-blue-100 text-blue-700 px-4 py-1.5 rounded-full text-xs font-bold hover:bg-blue-200 transition whitespace-nowrap border border-blue-200">Diesel</button>
             <button onclick="window.print()" class="ml-auto bg-slate-800 text-white px-4 py-1.5 rounded-full text-xs font-bold hover:bg-black transition whitespace-nowrap flex items-center gap-1"><i class="fas fa-print"></i> PDF</button>
         </div>
     </div>
@@ -65,14 +64,12 @@
         </div>
         <div id="no-results" class="hidden text-center py-20 text-slate-400">
             <i class="fas fa-search text-4xl mb-3"></i>
-            <p class="text-lg">No se encontraron vehículos con esos filtros.</p>
+            <p class="text-lg">No se encontraron vehículos.</p>
         </div>
     </main>
 
     <script>
-        // --- DATOS FILTRADOS SEGÚN ARCHIVO 'qualif().csv' ---
-        // Selección Marcelo = 1 en el CSV --> true aquí.
-        // Selección Marcelo = 0 o vacío --> false aquí.
+        // --- DATOS BASADOS EN TU ARCHIVO 'qualif().csv' ---
         
         const autos = [
             {
@@ -87,7 +84,7 @@
                 link: "https://www.facebook.com/marketplace/item/1931464890786329/",
                 scores: [9, 8, 10, 6, 9, 6], 
                 promedio: 8.0,
-                seleccion_marcelo: true, // CSV: 1
+                seleccion_marcelo: true,
                 patente: "DJRY96",
                 ficha_tecnica: "https://drive.google.com/file/d/1ZAEm8HM6DidQYtZtagjSa6glfPXA5PdB/view?usp=drive_link"
             },
@@ -103,7 +100,7 @@
                 link: "https://www.facebook.com/share/1BwbPUmBdC/",
                 scores: [9, 9, 9, 9, 9, 9],
                 promedio: 9.0,
-                seleccion_marcelo: true // CSV: 1 (Corregido)
+                seleccion_marcelo: true
             },
             {
                 modelo: "VW Gol Highline",
@@ -112,17 +109,17 @@
                 motor: "Bencina 1.6",
                 traccion: "4x2",
                 km: 50000,
-                estado: "Seminuevo (Ojo: Precio bajo sospechoso)",
+                estado: "Seminuevo (Sospechoso)",
                 ubicacion: "Peñalolén",
                 link: "https://www.chileautos.cl/vehiculos/detalles/2021-volkswagen-gol-1-6-highline/CL-AD-19891454/?Cr=52",
                 scores: [8, 8, 5, 9, 9, 9],
                 promedio: 8.0,
-                seleccion_marcelo: true // CSV: 1
+                seleccion_marcelo: true
             },
             {
                 modelo: "Fiat Strada",
                 ano: "2019",
-                precio: 3200000,
+                precio: 3200000, 
                 motor: "Bencina 1.4",
                 traccion: "4x2",
                 km: 80000,
@@ -131,7 +128,7 @@
                 link: "https://www.chileautos.cl/vehiculos/detalles/2019-fiat-strada/CL-AD-19955793/?Cr=107",
                 scores: [10, 7, 7, 1, 6, 7],
                 promedio: 6.3,
-                seleccion_marcelo: false // CSV: Vacío
+                seleccion_marcelo: false
             },
              {
                 modelo: "Great Wall Wingle 7",
@@ -145,51 +142,9 @@
                 link: "https://www.chileautos.cl/vehiculos/detalles/2022-great-wall-wingle-wingle-4p-2-2/CP-AD-8391937/?Cr=15",
                 scores: [7, 6, 8, 5, 5, 9],
                 promedio: 6.7,
-                seleccion_marcelo: false // CSV: Vacío
-            },
-            {
-                modelo: "Mahindra Pik Up (Oferta)",
-                ano: "2018",
-                precio: 5900000,
-                motor: "Diesel 2.2",
-                traccion: "4x2",
-                km: 200000,
-                estado: "Fallas: A/C, Radio, Tapiz",
-                ubicacion: "Santiago",
-                link: "https://www.facebook.com/marketplace/item/33915872564664518/",
-                scores: [7, 5, 9, 5, 5, 3],
-                promedio: 5.7,
                 seleccion_marcelo: false
             },
             {
-                modelo: "Nissan Terrano (Impecable)",
-                ano: "2013",
-                precio: 5980000,
-                motor: "Bencina 2.4",
-                traccion: "4x2",
-                km: 0,
-                estado: "Impecable nunca chocada",
-                ubicacion: "Santiago",
-                link: "https://www.facebook.com/marketplace/item/1593064041743173/",
-                scores: [3, 9, 8, 8, 8, 9],
-                promedio: 7.5,
-                seleccion_marcelo: false
-            },
-             {
-                modelo: "Nissan Terrano (Kilometrada)",
-                ano: "2013",
-                precio: 5800000,
-                motor: "Bencina 2.4",
-                traccion: "4x2",
-                km: 244000,
-                estado: "Alto Kilometraje",
-                ubicacion: "Santiago",
-                link: "https://www.facebook.com/marketplace/item/1620647795586680/",
-                scores: [3, 8, 8, 7, 7, 5],
-                promedio: 6.3,
-                seleccion_marcelo: false
-            },
-             {
                 modelo: "Mahindra Pickup (Barata)",
                 ano: "2013",
                 precio: 3200000,
@@ -201,7 +156,7 @@
                 link: "https://www.facebook.com/marketplace/item/1819047788712449/",
                 scores: [7, 5, 9, 5, 2, 4],
                 promedio: 5.3,
-                seleccion_marcelo: false // CSV: Vacío
+                seleccion_marcelo: false
             },
             {
                 modelo: "Great Wall H3",
@@ -215,85 +170,18 @@
                 link: "#",
                 scores: [4, 6, 7, 7, 4, 7],
                 promedio: 5.8,
-                seleccion_marcelo: false // CSV: Vacío
-            },
-             {
-                modelo: "Opel Corsa Enjoy",
-                ano: "2014",
-                precio: 5300000,
-                motor: "Bencina 1.4",
-                traccion: "4x2",
-                km: 87000,
-                estado: "Muy Bueno",
-                ubicacion: "RM",
-                link: "https://www.chileautos.cl/vehiculos/detalles/2014-opel-corsa-1-4-enjoy/CL-AD-18211276/?Cr=23",
-                scores: [8, 6, 3, 4, 5, 8],
-                promedio: 5.7,
-                seleccion_marcelo: false
-            },
-            {
-                modelo: "Peugeot 208 Puretech",
-                ano: "2018",
-                precio: 6500000,
-                motor: "Bencina 1.2",
-                traccion: "4x2",
-                km: 97000,
-                estado: "Muy económico",
-                ubicacion: "San Miguel",
-                link: "https://www.chileautos.cl/vehiculos/detalles/2018-peugeot-208-1-2-puretech-82-hp-manual-active/CL-AD-18791452/?Cr=63",
-                scores: [9, 7, 3, 6, 7, 8],
-                promedio: 6.7,
-                seleccion_marcelo: false
-            },
-            {
-                modelo: "Renault Kwid Intens",
-                ano: "2023",
-                precio: 7200000,
-                motor: "Bencina 1.0",
-                traccion: "4x2",
-                km: 20000,
-                estado: "Seminuevo",
-                ubicacion: "RM",
-                link: "https://www.chileautos.cl/vehiculos/detalles/2023-renault-kwid-1-0-intens/CL-AD-19383814/?Cr=4",
-                scores: [10, 5, 4, 6, 6, 10],
-                promedio: 6.8,
-                seleccion_marcelo: false
-            },
-            {
-                modelo: "VW Gol Power",
-                ano: "2018",
-                precio: 6500000,
-                motor: "Bencina 1.6",
-                traccion: "4x2",
-                km: 90000,
-                estado: "Usado",
-                ubicacion: "RM",
-                link: "https://www.chileautos.cl/vehiculos/detalles/2018-volkswagen-gol-1-6-manual-power/CL-AD-19863915/?Cr=162",
-                scores: [6, 8, 5, 9, 9, 7],
-                promedio: 7.3,
-                seleccion_marcelo: false
-            },
-             {
-                modelo: "Renault Clio IV",
-                ano: "2018",
-                precio: 6800000,
-                motor: "Bencina 1.2",
-                traccion: "4x2",
-                km: 80000,
-                estado: "Usado Turbo",
-                ubicacion: "RM",
-                link: "https://www.chileautos.cl/vehiculos/detalles/2018-renault-clio-iv-1-2/CL-AD-18966630/?Cr=202",
-                scores: [9, 6, 3, 5, 6, 7],
-                promedio: 6.0,
                 seleccion_marcelo: false
             }
         ];
 
-        // --- LÓGICA DE RENDERIZADO ---
+        // --- RENDERIZADO ---
         
         function renderCars(data) {
             const grid = document.getElementById('cars-grid');
             const noResults = document.getElementById('no-results');
+            
+            if(!grid) return; // Seguridad
+            
             grid.innerHTML = '';
             
             if (data.length === 0) {
@@ -304,20 +192,28 @@
             }
 
             data.forEach((auto, index) => {
-                const precioFmt = new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 }).format(auto.precio);
+                // Formato de precio seguro
+                let precioFmt = "$0";
+                try {
+                    precioFmt = new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 }).format(auto.precio);
+                } catch(e) { precioFmt = "$" + auto.precio; }
+
                 const chartId = `radar-${index}`;
                 
-                // Color semáforo según promedio
+                // Color semáforo
                 let colorRing = "border-red-500 bg-red-500";
                 if (auto.promedio >= 7.5) colorRing = "border-emerald-500 bg-emerald-500";
                 else if (auto.promedio >= 6.5) colorRing = "border-amber-500 bg-amber-500";
                 
-                // Badge de Marcelo (Visible solo si es true)
+                // Badge Marcelo
                 const marceloBadge = auto.seleccion_marcelo ? `
                 <div class="marcelo-badge bg-indigo-600 text-white px-3 py-1 rounded-full shadow-lg border-2 border-white flex items-center gap-1">
                     <i class="fas fa-check-circle text-yellow-300"></i>
                     <span class="text-xs font-bold uppercase tracking-wider">Selección Marcelo</span>
                 </div>` : '';
+
+                // Links
+                const fichaLink = auto.ficha_tecnica ? `<a href="${auto.ficha_tecnica}" target="_blank" class="text-xs text-blue-600 hover:underline mt-1 block"><i class="fas fa-file-pdf"></i> Ver Ficha Técnica Drive</a>` : '';
 
                 const card = `
                 <div class="card-auto bg-white rounded-2xl p-0 relative border border-slate-100 flex flex-col h-full group">
@@ -327,138 +223,10 @@
                         ${auto.promedio.toFixed(1)}
                     </div>
 
-                    <!-- Header -->
                     <div class="p-6 pb-2">
                         <div class="pr-12 mb-3">
                             <h2 class="text-xl font-extrabold text-slate-800 leading-tight group-hover:text-indigo-600 transition-colors">${auto.modelo}</h2>
                             <div class="flex flex-wrap gap-2 mt-2">
                                 <span class="px-2 py-0.5 bg-slate-100 text-slate-600 text-xs font-bold rounded border border-slate-200 uppercase">${auto.ano}</span>
                                 <span class="px-2 py-0.5 bg-blue-50 text-blue-700 text-xs font-bold rounded border border-blue-100 uppercase">${auto.traccion}</span>
-                                <span class="px-2 py-0.5 bg-purple-50 text-purple-700 text-xs font-bold rounded border border-purple-100 uppercase">${auto.motor}</span>
-                            </div>
-                        </div>
-
-                        <!-- Datos Clave -->
-                        <div class="grid grid-cols-2 gap-3 mb-4">
-                            <div class="text-center p-3 bg-slate-50 rounded-xl border border-slate-100">
-                                <p class="text-[10px] uppercase text-slate-400 font-bold tracking-wider">Precio</p>
-                                <p class="text-lg font-black text-slate-900">${precioFmt}</p>
-                            </div>
-                            <div class="text-center p-3 bg-slate-50 rounded-xl border border-slate-100">
-                                <p class="text-[10px] uppercase text-slate-400 font-bold tracking-wider">Km</p>
-                                <p class="text-lg font-bold text-slate-700">${auto.km.toLocaleString()}</p>
-                            </div>
-                        </div>
-
-                        <!-- Estado -->
-                        <div class="mb-2">
-                             <div class="bg-amber-50 rounded-lg p-3 border border-amber-100 flex items-start gap-2">
-                                <i class="fas fa-info-circle text-amber-500 mt-0.5 text-sm"></i>
-                                <p class="text-xs text-slate-700 font-medium leading-relaxed">
-                                    <span class="font-bold text-amber-700 uppercase block text-[10px] mb-0.5">Estado / Detalle</span>
-                                    ${auto.estado}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Gráfico -->
-                    <div class="relative w-full h-48 px-2 mt-auto">
-                        <canvas id="${chartId}"></canvas>
-                    </div>
-
-                    <!-- Footer / Acciones -->
-                    <div class="p-4 bg-slate-50 border-t border-slate-100 flex gap-2 no-print mt-2 rounded-b-2xl">
-                        <a href="${auto.link}" target="_blank" class="flex-1 bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 hover:text-indigo-600 hover:border-indigo-300 text-center py-2.5 rounded-lg font-bold text-sm transition shadow-sm flex items-center justify-center gap-2">
-                            <i class="fas fa-external-link-alt"></i> Ver Aviso
-                        </a>
-                        <a href="https://wa.me/?text=Hola,%20me%20interesa%20tu%20auto%20${encodeURIComponent(auto.modelo)}" target="_blank" class="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white text-center py-2.5 rounded-lg font-bold text-sm transition shadow-sm hover:shadow-md flex items-center justify-center gap-2">
-                            <i class="fab fa-whatsapp text-lg"></i> Contactar
-                        </a>
-                         ${auto.ficha_tecnica ? `
-                        <a href="${auto.ficha_tecnica}" target="_blank" class="w-10 bg-slate-800 hover:bg-black text-white text-center py-2.5 rounded-lg font-bold text-sm transition shadow-sm flex items-center justify-center" title="Ver Ficha Técnica">
-                            <i class="fas fa-file-alt"></i>
-                        </a>` : ''}
-                    </div>
-                </div>
-                `;
-                grid.innerHTML += card;
-            });
-
-            // Renderizar gráficos
-            setTimeout(() => {
-                data.forEach((auto, index) => {
-                    initChart(`radar-${index}`, auto.scores);
-                });
-            }, 50);
-        }
-
-        function initChart(id, scores) {
-            const ctx = document.getElementById(id).getContext('2d');
-            new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: ['Econ', 'Fiabilidad', 'Rural', 'Mant.', 'Reventa', 'Estado'],
-                    datasets: [{
-                        label: 'Puntos',
-                        data: scores,
-                        backgroundColor: 'rgba(79, 70, 229, 0.15)', // Indigo suave
-                        borderColor: 'rgba(79, 70, 229, 0.8)',      // Indigo fuerte
-                        pointBackgroundColor: 'rgba(79, 70, 229, 1)',
-                        borderWidth: 2,
-                        pointRadius: 2,
-                        pointHoverRadius: 5
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        r: {
-                            angleLines: { color: '#e2e8f0' },
-                            grid: { color: '#f1f5f9' },
-                            pointLabels: { 
-                                font: { size: 9, weight: '700', family: 'Outfit' }, 
-                                color: '#64748b' 
-                            },
-                            suggestedMin: 0,
-                            suggestedMax: 10,
-                            ticks: { display: false }
-                        }
-                    },
-                    plugins: { legend: { display: false } }
-                }
-            });
-        }
-
-        // --- SISTEMA DE FILTRADO ---
-        
-        function filterCars() {
-            const term = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = autos.filter(a => 
-                a.modelo.toLowerCase().includes(term) || 
-                a.ubicacion.toLowerCase().includes(term) ||
-                a.ano.toString().includes(term)
-            );
-            renderCars(filtered);
-        }
-
-        function filterBy(type) {
-            let filtered = autos;
-            if (type === '4x4') filtered = autos.filter(a => a.traccion.includes('4x4'));
-            if (type === 'top') filtered = autos.filter(a => a.promedio >= 7.0);
-            if (type === 'diesel') filtered = autos.filter(a => a.motor.toLowerCase().includes('diesel'));
-            if (type === 'marcelo') filtered = autos.filter(a => a.seleccion_marcelo === true); // Filtro Marcelo
-            
-            renderCars(filtered);
-            
-            // Actualizar estado visual de botones (opcional pero recomendado)
-            // (Aquí podrías agregar lógica para resaltar el botón activo)
-        }
-
-        // Inicializar al cargar
-        renderCars(autos);
-
-    </script>
-</body>
-</html>
+                                <span class="px-2 py-0.5 bg-purple-50 text-purple-700 text-xs font-bold rounded border border-purple-100 uppercase">${auto.
